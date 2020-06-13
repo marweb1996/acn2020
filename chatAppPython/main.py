@@ -1,13 +1,14 @@
-import qrcode
-from Crypto.Random import get_random_bytes
-import uuid
-from base64 import b64encode
 import socket
 import time
+import uuid
+import qrcode
 import requests
+
 from Crypto.Cipher import AES
-import os
-from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import unpad
+
+from base64 import b64encode, b64decode
 
 
 def generate_qr():
@@ -24,10 +25,7 @@ def generate_qr():
     s.connect(("8.8.8.8", 80))
     IPAddr = s.getsockname()[0]
     s.close()
-
     qr_code = str(clientId) + "&&&" + b64encode(key).decode() + "&&&" + IPAddr
-    print(qr_code)
-
     qr.add_data(qr_code)
     qr.make(fit=True)
 
@@ -35,22 +33,16 @@ def generate_qr():
 
     img.show()
 
-    return clientId, b64encode(key).decode()
+    return clientId, key
 
 
 def decrypt_message(cipher_text, key):
-    # cipher = AES.new(key, AES.MODE_CBC)
-    # plaintext = cipher.decrypt(encrypted_message)
-    # print(plaintext)
-    cipher = AES.new(key.encode("utf8"), AES.MODE_ECB)
-    print(cipher_text)
-    print(cipher_text.encode("utf8"))
-    print(pad(cipher_text.encode("utf8"), 16))
-    print(cipher_text.decode("hex"))
-    message = cipher.decrypt(pad(cipher_text.encode("utf8"), 16))
-    print(b64encode(message).decode())
-    #text = AESCrypto(key).decrypt(cipher_text)
-    #print(text)
+    ct_encoded = b64decode(cipher_text)
+    iv = ct_encoded[:16]
+    ct = ct_encoded[16:]
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    message = unpad(cipher.decrypt(ct), AES.block_size)
+    return message
 
 
 def main():
@@ -61,8 +53,8 @@ def main():
         data = response.json()
         if data["status"] == 200 and len(data["messages"]) > 0:
             for m in data["messages"]:
-                decrypt_message(m, key)
-        print(data)
+                message = decrypt_message(m, key)
+                print("Message: " + str(message.decode("utf-8")))
         time.sleep(1)
 
 
