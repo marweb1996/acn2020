@@ -14,13 +14,16 @@ app.get("/", function(req, res) {
 });
 
 app.post("/sendMessage", function(req, res) {
-    console.log("heyho");
-    // clientId
-    // message
+    console.log("Message received with " + req.body.clientId);
+    console.log(req.body.message);
     if(!clients[req.body.clientId]) {
         clients[req.body.clientId] = [];
     }
     clients[req.body.clientId].push(req.body.message);
+    res.json({
+        status: 200,
+        message: "Message sent"
+    })
 });
 
 app.get("/getMessages", function(req, res) {
@@ -31,10 +34,16 @@ app.get("/getMessages", function(req, res) {
         clients[req.query.clientId] = [];
     }
     if(clients[req.query.clientId].length > 0) {
-        req.json(clients[req.query.clientId]);
+        res.json({
+            status: 200,
+            messages: clients[req.query.clientId]
+        });
         clients[req.query.clientId] = [];
     } else {
-        res.send("No new messages");
+        res.json({
+            status: 200,
+            messages: []
+        });
     }
 });
 
