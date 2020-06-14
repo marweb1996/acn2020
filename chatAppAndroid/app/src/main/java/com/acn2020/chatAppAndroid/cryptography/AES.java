@@ -1,4 +1,4 @@
-package com.budiyev.android.libdemoapp.cryptography;
+package com.acn2020.chatAppAndroid.cryptography;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

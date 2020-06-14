@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.budiyev.android.libdemoapp;
+package com.acn2020.chatAppAndroid;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Base64;
@@ -33,14 +32,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.budiyev.android.libdemoapp.base.BaseActivity;
-import com.budiyev.android.libdemoapp.codescanner.CodeScannerActivity;
-import com.budiyev.android.libdemoapp.cryptography.AES;
-import com.budiyev.android.libdemoapp.dto.Message;
-import com.budiyev.android.libdemoapp.dto.ResponseDto;
-import com.budiyev.android.libdemoapp.helper.ConnectionKeeper;
-import com.budiyev.android.libdemoapp.helper.RestHelper;
-import com.budiyev.android.libdemoapp.model.ClientConnection;
+import com.acn2020.chatAppAndroid.base.BaseActivity;
+import com.acn2020.chatAppAndroid.codescanner.CodeScannerActivity;
+import com.acn2020.chatAppAndroid.cryptography.AES;
+import com.acn2020.chatAppAndroid.dto.Message;
+import com.acn2020.chatAppAndroid.dto.ResponseDto;
+import com.acn2020.chatAppAndroid.helper.ConnectionKeeper;
+import com.acn2020.chatAppAndroid.helper.RestHelper;
+import com.acn2020.chatAppAndroid.model.ClientConnection;
 
 import org.json.JSONException;
 

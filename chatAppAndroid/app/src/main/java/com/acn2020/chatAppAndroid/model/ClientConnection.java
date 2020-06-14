@@ -1,4 +1,4 @@
-package com.budiyev.android.libdemoapp.model;
+package com.acn2020.chatAppAndroid.model;
 
 public class ClientConnection {
     private String clientId;

@@ -1,6 +1,6 @@
-package com.budiyev.android.libdemoapp.helper;
+package com.acn2020.chatAppAndroid.helper;
 
-import com.budiyev.android.libdemoapp.model.ClientConnection;
+import com.acn2020.chatAppAndroid.model.ClientConnection;
 
 import java.util.ArrayList;
 import java.util.List;

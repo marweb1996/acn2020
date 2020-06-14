@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.budiyev.android.libdemoapp">
+    package="com.acn2020.chatAppAndroid">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.acn2020.chatAppAndroid.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,7 +35,7 @@
 
         <activity
             android:label="@string/code_scanner"
-            android:name=".codescanner.CodeScannerActivity"/>
+            android:name="com.acn2020.chatAppAndroid.codescanner.CodeScannerActivity"/>
 
         <activity
             android:label="@string/circular_progress_bar"

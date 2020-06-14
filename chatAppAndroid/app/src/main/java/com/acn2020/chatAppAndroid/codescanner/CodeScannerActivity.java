@@ -21,23 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.budiyev.android.libdemoapp.codescanner;
+package com.acn2020.chatAppAndroid.codescanner;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.budiyev.android.codescanner.CodeScanner;
-import com.budiyev.android.libdemoapp.R;
-import com.budiyev.android.libdemoapp.base.BaseActivity;
-import com.budiyev.android.libdemoapp.helper.ConnectionKeeper;
-import com.budiyev.android.libdemoapp.model.ClientConnection;
+import com.acn2020.chatAppAndroid.R;
+import com.acn2020.chatAppAndroid.base.BaseActivity;
+import com.acn2020.chatAppAndroid.helper.ConnectionKeeper;
+import com.acn2020.chatAppAndroid.model.ClientConnection;
 
 public class CodeScannerActivity extends BaseActivity {
     private static final int RC_PERMISSION = 10;

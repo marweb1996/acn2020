@@ -1,4 +1,4 @@
-package com.budiyev.android.libdemoapp.dto;
+package com.acn2020.chatAppAndroid.dto;
 
 public class ResponseDto {
     private Integer status;
