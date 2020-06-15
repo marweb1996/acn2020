@@ -57,7 +57,7 @@ public class CodeScannerActivity extends BaseActivity {
             String key = parts[1];
             String ipAddress = parts[2];
             String hostName = parts[3];
-            keeper.addConnection(new ClientConnection(clientId, key, ipAddress, hostName));
+            keeper.setConnection(new ClientConnection(clientId, key, ipAddress, hostName));
             Toast.makeText(this, "Paired with Desktop Client " + hostName, Toast.LENGTH_SHORT).show();
             setResult(Activity.RESULT_OK);
             finish();

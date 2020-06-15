@@ -50,15 +50,23 @@ def main():
     print("Starting python client..")
     print('-' * 50 + "\n\n")
     clientId, key = generate_qr()
-    while True:
+    running = True
+    while running:
         response = requests.get(f"http://192.168.8.100:3000/getMessages?clientId={clientId}")
         data = response.json()
         if data["status"] == 200 and len(data["messages"]) > 0:
             for m in data["messages"]:
                 message = decrypt_message(m["message"], key)
-                print("*" * 20 + " YOU GOT A NEW MESSAGE " + "*" * 20)
-                print("Message: " + str(message.decode("utf-8")))
-                print("Date: " + str(m["timestamp"]))
+                if message.decode("utf-8").startswith("pair"):
+                    print("*" * 20 + " CONNECTED TO " + message.decode("utf-8").split(":")[1] + " " + "*" * 20)
+                elif message.decode("utf-8").startswith("unpair"):
+                    print("*" * 20 + " DISCONNECTED FROM " + message.decode("utf-8").split(":")[1] + " " + "*" * 20)
+                    running = False
+                    break
+                else:
+                    print("*" * 20 + " YOU GOT A NEW MESSAGE " + "*" * 20)
+                    print("Message: " + str(message.decode("utf-8")))
+                    print("Date: " + str(m["timestamp"]))
                 print("\n")
         time.sleep(0.1)
 

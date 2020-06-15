@@ -40,4 +40,10 @@
         android:layout_height="wrap_content"
         android:text="Send" />
 
+    <Button
+        android:id="@+id/unpair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Unpair " />
+
 </LinearLayout>
