@@ -25,7 +25,8 @@ def generate_qr():
     s.connect(("8.8.8.8", 80))
     IPAddr = s.getsockname()[0]
     s.close()
-    qr_code = str(clientId) + "&&&" + b64encode(key).decode() + "&&&" + IPAddr
+    host_name = socket.gethostname()
+    qr_code = str(clientId) + "&&&" + b64encode(key).decode() + "&&&" + IPAddr + "&&&" + host_name
     qr.add_data(qr_code)
     qr.make(fit=True)
 
@@ -46,16 +47,20 @@ def decrypt_message(cipher_text, key):
 
 
 def main():
-    print("Starting python client")
+    print("Starting python client..")
+    print('-' * 50 + "\n\n")
     clientId, key = generate_qr()
     while True:
         response = requests.get(f"http://192.168.8.100:3000/getMessages?clientId={clientId}")
         data = response.json()
         if data["status"] == 200 and len(data["messages"]) > 0:
             for m in data["messages"]:
-                message = decrypt_message(m, key)
+                message = decrypt_message(m["message"], key)
+                print("*" * 20 + " YOU GOT A NEW MESSAGE " + "*" * 20)
                 print("Message: " + str(message.decode("utf-8")))
-        time.sleep(1)
+                print("Date: " + str(m["timestamp"]))
+                print("\n")
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":

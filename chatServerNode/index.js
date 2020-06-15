@@ -14,12 +14,15 @@ app.get("/", function(req, res) {
 });
 
 app.post("/sendMessage", function(req, res) {
-    console.log("Message received with " + req.body.clientId);
-    console.log(req.body.message);
+    console.log("Message received for client " + req.body.clientId);
+    console.log("Encrypted message: " + req.body.message);
     if(!clients[req.body.clientId]) {
         clients[req.body.clientId] = [];
     }
-    clients[req.body.clientId].push(req.body.message);
+    clients[req.body.clientId].push({
+        message: req.body.message,
+        timestamp: req.body.timestamp
+    });
     res.json({
         status: 200,
         message: "Message sent"

@@ -44,6 +44,7 @@ import com.acn2020.chatAppAndroid.model.ClientConnection;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class MainActivity extends BaseActivity {
     private ConnectionKeeper keeper;
@@ -65,13 +66,16 @@ public class MainActivity extends BaseActivity {
             try {
                 ClientConnection connection = keeper.getLastConnection();
                 byte[] encryptedMessage = AES.encryptCBC(message.getText().toString(), connection.getAesKey());
-                System.out.println(AES.print(encryptedMessage));
-                String decryptedMessage = AES.decryptCBC(encryptedMessage, connection.getAesKey());
-                System.out.println(decryptedMessage);
-                System.out.println("Encoded: " + Base64.encodeToString(encryptedMessage, Base64.DEFAULT));
-                System.out.println("Decoded: " + AES.print(Base64.decode(Base64.encodeToString(encryptedMessage, Base64.DEFAULT), Base64.DEFAULT)));
-                Message newMessage = new Message(connection.getClientId(), Base64.encodeToString(encryptedMessage, Base64.DEFAULT));
-                RestHelper.restCall("http://192.168.8.100:3000/sendMessage", "POST", newMessage, ResponseDto.class, null);
+                System.out.println("Sending encrypted message to client...");
+                Message newMessage = new Message(connection.getClientId(), Base64.encodeToString(encryptedMessage, Base64.DEFAULT), new Date());
+                ResponseDto response = (ResponseDto) RestHelper.restCall("http://192.168.8.100:3000/sendMessage", "POST", newMessage, ResponseDto.class, null);
+                if(response.getStatus().equals(200)) {
+                    System.out.println("Server responded:");
+                    System.out.println("Message for client " + connection.getClientId());
+                    System.out.println("Encrypted Message: " + Base64.encodeToString(encryptedMessage, Base64.DEFAULT));
+                } else {
+                    System.out.println("Error sending message to server...");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -89,7 +93,7 @@ public class MainActivity extends BaseActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 ClientConnection connection = keeper.getLastConnection();
-                ((TextView) findViewById(R.id.status)).setText("paired with " + connection.getClientId());
+                ((TextView) findViewById(R.id.status)).setText("paired with " + connection.getHostName());
             }
             else{
                 Toast.makeText(this, "Error reading QR Code!", Toast.LENGTH_LONG).show();

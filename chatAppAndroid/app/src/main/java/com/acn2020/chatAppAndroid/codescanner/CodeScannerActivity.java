@@ -52,16 +52,13 @@ public class CodeScannerActivity extends BaseActivity {
         mCodeScanner = new CodeScanner(this, findViewById(R.id.scanner));
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
             String message = result.getText();
-            System.out.println(message);
             String[] parts = message.split("&&&");
             String clientId = parts[0];
             String key = parts[1];
             String ipAddress = parts[2];
-            System.out.println("Client ID: " + clientId);
-            System.out.println("AES Key: " + key);
-            System.out.println("IP Address: " + ipAddress);
-            keeper.addConnection(new ClientConnection(clientId, key, ipAddress));
-            Toast.makeText(this, "Paired with Desktop Client " + clientId, Toast.LENGTH_LONG).show();
+            String hostName = parts[3];
+            keeper.addConnection(new ClientConnection(clientId, key, ipAddress, hostName));
+            Toast.makeText(this, "Paired with Desktop Client " + hostName, Toast.LENGTH_SHORT).show();
             setResult(Activity.RESULT_OK);
             finish();
         }));
