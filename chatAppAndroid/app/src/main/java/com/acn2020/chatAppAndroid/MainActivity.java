@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
             if(decryptor.containsAlias(CHAT_APP_ALIAS)) {
                 String aesKey = decryptKey();
                 if(aesKey != null) {
-                    ClientConnection connection = new ClientConnection();
+                    connection = new ClientConnection();
                     String stringFromSharedPrefs = this.preferences.getString(KEY_CLIENT_ID, null);
                     if(stringFromSharedPrefs != null) {
                         connection.setClientId(stringFromSharedPrefs);

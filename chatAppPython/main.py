@@ -48,8 +48,9 @@ def decrypt_message(cipher_text, key):
 
 def main():
     print("Starting python client..")
-    print('-' * 50 + "\n\n")
+    print('-' * 50)
     clientId, key = generate_qr()
+    print("Client ID: " + str(clientId) + "\n")
     running = True
     while running:
         response = requests.get(f"http://192.168.8.100:3000/getMessages?clientId={clientId}")
