@@ -74,6 +74,10 @@ def main():
                     print("Date: " + str(m["timestamp"]))
                 print("\n")
         time.sleep(0.1)
+    response = requests.post(f"http://192.168.8.100:3000/deregisterClient", json={"clientId": str(clientId)})
+    data = response.json()
+    if data["status"] == 200:
+        print("Client de-registered\n")
 
 
 if __name__ == "__main__":

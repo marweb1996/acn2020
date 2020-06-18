@@ -29,15 +29,32 @@ app.post("/registerClient", function(req, res) {
     }
 });
 
-app.post("/sendMessage", function(req, res) {
-    console.log("Message received for client " + req.body.clientId);
-    console.log("Encrypted message: " + req.body.message);
+app.post("/deregisterClient", function(req, res) {
+    console.log("Deregister client " + req.body.clientId);
     if(!clients[req.body.clientId]) {
+        res.json({
+            status: 200,
+            message: "Client not registered"
+        })
+    } else {
+        delete clients[req.body.clientId]
+        res.json({
+            status: 200,
+            message: "Client de-registered"
+        })
+    }
+});
+
+app.post("/sendMessage", function(req, res) {
+    if(!clients[req.body.clientId]) {
+        console.log("No client with id " + req.body.clientId)
         res.json({
             status: 200,
             message: "No client with id " + req.body.clientId
         })
     } else {
+        console.log("Message received for client " + req.body.clientId);
+        console.log("Encrypted message: " + req.body.message);
         clients[req.body.clientId].push({
             message: req.body.message,
             timestamp: req.body.timestamp
