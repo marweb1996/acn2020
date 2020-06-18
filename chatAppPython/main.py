@@ -51,6 +51,10 @@ def main():
     print('-' * 50)
     clientId, key = generate_qr()
     print("Client ID: " + str(clientId) + "\n")
+    response = requests.post(f"http://192.168.8.100:3000/registerClient", json={"clientId": str(clientId)})
+    data = response.json()
+    if data["status"] == 200:
+        print("Client registered\n")
     running = True
     while running:
         response = requests.get(f"http://192.168.8.100:3000/getMessages?clientId={clientId}")
